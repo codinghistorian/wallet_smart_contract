@@ -1,0 +1,48 @@
+220303 21:19 KST note for testing
+
+0)deploy token1, token2 and wallet
+the first account in ganache is the deployer/owner of those three contracts.
+
+##Receive and send tokens##
+
+second account in ganache is the user of the wallet.
+1)Send some amount of token1 to the wallet.
+
+2)see if user(second account) can transfer tokens to the third account
+  then balanceOf(thirdAccount) to check if third account really received it.
+
+repeat with token2
+
+##Receive and send ETH##
+
+1)send some eth to the wallet.- >check balance to see if the contracdt really received ETH
+2)withdraw(send) some ETH to 4th account in ganache.
+3)check if the 4th account really received ETH + check if commission was properly received
+for this, it would be nice to check through ether.js way of checking balance of just
+add ganache accounts to metamask
+
+##change fee##
+1)change fee with wallet 0.
+2)check if the fee changed by reading the public state variable.
+
+##servier provider needs to be the deployer of the contract##
+1)check if the provider's addresses is the first account in ganache
+
+##checking allowance##
+
+1)need to deploy a contract that will manipulate ERC20 from the wallet contract.
+2)wallet contract needs to approve so that manipulator can safeTransferfrom the tokens
+3)do the safeTransferFrom from wallet address to 4th address in ganache. - check it with balanceOf();
+
+
+220303 21:31 KST
+once all those things above work fine, write scripts with ganache accounts.
+get that testing I did for chess game to run test on hardhat node.
+
+21:36 KST
+hm... should I add reentrancy guard for eth transfer or not.. hm...
+
+23:18 KST.
+No I don't have to because I already have access control by role.
+I better make a getter for address(this).balance to check ETH balance
+

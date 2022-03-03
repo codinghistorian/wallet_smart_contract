@@ -15,6 +15,7 @@
  //fallback, receive and some reentry protection with modifier and state change before
  //low-level call should do the job. Make it ERC20 acceptible
 
+
 220302 20:41 KST note.
 
  //  * Ability to send/receive ETH
@@ -40,4 +41,4 @@
 // I can just make this low-level call work twice. once for actual transfer, the other for comission.
 
 //  * The address for the transfer is hardcoded into the contract
-// -> okay. receiver addresse hardcoded. No constructor.
+// -> okay. receiver addresse hardcoded. No constructor->yes contructor.

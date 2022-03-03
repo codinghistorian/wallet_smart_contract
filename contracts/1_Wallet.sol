@@ -14,7 +14,8 @@ contract Wallet is Ownable, AccessControl {
 
     //@Dev deployer of this contract will be the Owner and fee taker of this contract.
 
-    address serviceProvider;
+    //Here it is made public so it is readable when testing. in production, better stay private
+    address public serviceProvider;
 
     //@Dev access control by Role added in order to make sure this wallet is used by the right
     //person
@@ -28,7 +29,8 @@ contract Wallet is Ownable, AccessControl {
  
     //@Dev Owner of this contract and change fee
     //@Param newFee - fee in wei
-    uint fee = 100000;
+    //Here it is made public so it is readable when testing. in production, better stay private
+    uint public fee = 100000;
 
     event ChangedFee(uint newFee);
     function changeFee(uint _new) external onlyOwner {
@@ -118,6 +120,10 @@ contract Wallet is Ownable, AccessControl {
         require(_token.balanceOf(address(this)) >= _amount, "Not enough tokens");
         _token.safeDecreaseAllowance(_spender, _amount);
         emit Allowance(_spender, _amount);
+    }
+
+    function balance() view external returns(uint balance){
+        return address(this).balance;
     }
 
 }
