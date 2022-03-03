@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 // owner here will be the service provider
 // 220303 19:09 KST I should probably make a different role for users
 
-contract Wallet is Ownable {
+contract Wallet is Ownable, AccessControl {
     using SafeERC20 for IERC20;
     using SafeMath for uint256;
     bytes32 public constant USER_ROLE = keccak256("USER_ROLE");
@@ -82,18 +82,22 @@ contract Wallet is Ownable {
     event Allowance(address indexed spender, uint value);
     function approve(IERC20 _token, address _spender, uint _amount) external {
         require(hasRole(USER_ROLE, msg.sender), "Caller is not our user");
+        require(_token.balanceOf(address(this)) >= _amount, "Not enough tokens");
+
         _token.safeApprove(_spender, _amount);
         emit Allowance(_spender, _amount);
     }
 
     function allowanceIncrease(IERC20 _token, address _spender, uint _amount) external {
         require(hasRole(USER_ROLE, msg.sender), "Caller is not our user");
+        require(_token.balanceOf(address(this)) >= _amount, "Not enough tokens");
         _token.safeIncreaseAllowance(_spender, _amount);
         emit Allowance(_spender, _amount);
     }
 
     function allowanceDecrease(IERC20 _token, address _spender, uint _amount) external {
         require(hasRole(USER_ROLE, msg.sender), "Caller is not our user");
+        require(_token.balanceOf(address(this)) >= _amount, "Not enough tokens");
         _token.safeDecreaseAllowance(_spender, _amount);
         emit Allowance(_spender, _amount);
     }
