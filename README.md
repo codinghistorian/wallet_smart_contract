@@ -34,11 +34,10 @@
 // -> I can just make the fee state variable with  a function that changes it. Onlyowner needed.
 
 //  * Commission - is a certain number of the transferred amount
-// -> for this I need to look at the original text from Russian... so do I need to
-// make the fee absolute? or relative? I don't know yet.
+// -> fuck it. I will just make the comission a constant value in wei
 
 //  * The transfer of this commission must be made along with the regular transfer
 // I can just make this low-level call work twice. once for actual transfer, the other for comission.
 
 //  * The address for the transfer is hardcoded into the contract
-// -> okay. receiver addresse hardcoded.
+// -> okay. receiver addresse hardcoded. No constructor.
