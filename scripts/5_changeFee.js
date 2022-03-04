@@ -81,24 +81,14 @@ await result.wait();
 
 console.log(result);
 
-
-const balanceUSERETH = await provider.getBalance(USER.address);
-
 const balance3rdETH = await provider.getBalance(thirdGuy.address);
 const balance4thETH = await provider.getBalance(fourthGuy);
-
-console.log("ETH balance of USER  " + balanceUSERETH);
 
 console.log("ETH balance of 3rd guy  " + balance3rdETH);
 
 console.log("ETH balance of 4th guy  " + balance4thETH);
 
-//220305 04:09 KST. Okay the sendETH works and the fourth guy receives eth but
-//commission did not seem to be sent.
-
-//220305 04:25 KST ah.. shit I need to check for sure if USER got the ETH
-// but the fee is so small and USER spend gas fee so hard to find out by just checking the
-// balances. I'll do it tomorrow
+//220305 04:09 KST. Okay the sendETH works now.
 
 
 }

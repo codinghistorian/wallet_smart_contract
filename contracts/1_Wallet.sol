@@ -14,8 +14,13 @@ contract Wallet is Ownable, AccessControl {
 
     //@Dev deployer of this contract will be the Owner and fee taker of this contract.
 
-    //Here it is made public so it is readable when testing. in production, better stay private
-    address public serviceProvider;
+    //Here it is made temporarily 
+    // public so it is readable when testing. in production, better stay private
+    //and just make a getter function instead with view  onlyOwner
+    address private serviceProvider;
+    function whoBandit() view external onlyOwner returns(address) {
+        return serviceProvider;
+    }    
 
     //@Dev access control by Role added in order to make sure this wallet is used by the right
     //person
@@ -29,8 +34,14 @@ contract Wallet is Ownable, AccessControl {
  
     //@Dev Owner of this contract and change fee
     //@Param newFee - fee in wei
-    //Here it is made public so it is readable when testing. in production, better stay private
-    uint public fee = 100000;
+    //Here it is made  temporarily 
+    // public so it is readable when testing. in production, better stay private
+    //and just make a getter function instead with view onlyOwner
+    uint private fee = 9999999999;
+
+    function feeHow() view external onlyOwner returns(uint) {
+        return fee;
+    }
 
     event ChangedFee(uint newFee);
     function changeFee(uint _new) external onlyOwner {
@@ -122,7 +133,7 @@ contract Wallet is Ownable, AccessControl {
         emit Allowance(_spender, _amount);
     }
 
-    function balance() view external returns(uint balance){
+    function balance() view external returns(uint){
         return address(this).balance;
     }
 

@@ -16,6 +16,9 @@ repeat with token2
 ##Receive and send ETH##
 
 1)send some eth to the wallet.- >check balance to see if the contracdt really received ETH
+220305 03:28 KST I made a getter function for that. I am gonna redeploy the smart contract now.
+Let's make the third guy send ETH to the wallet and make the USER(Second guy in ganache)
+send the eth to the fourth guy
 2)withdraw(send) some ETH to 4th account in ganache.
 3)check if the 4th account really received ETH + check if commission was properly received
 for this, it would be nice to check through ether.js way of checking balance of just
