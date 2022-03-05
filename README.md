@@ -1,4 +1,5 @@
 220305 21:15 Waffle Testing to be started. 
+220305 00:35.. okay, never mind. I will start regular assertion testing.
  
  
  Write a smart contract like "wallet".
