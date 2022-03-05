@@ -46,7 +46,7 @@ contract Wallet is Ownable, AccessControl {
         return fee;
     }
 
-    event ChangedFee(uint newFee);
+    event ChangedFee(uint indexed newFee);
     function changeFee(uint _new) external onlyOwner {
         fee = _new;
         emit ChangedFee(fee);
@@ -55,7 +55,7 @@ contract Wallet is Ownable, AccessControl {
 
 
     //@Dev to receiv ETH
-    event Deposit(address indexed sender, uint amount);
+    event Deposit(address indexed sender, uint indexed amount);
 
     fallback() external payable{
         emit Deposit(msg.sender, msg.value);
@@ -65,7 +65,7 @@ contract Wallet is Ownable, AccessControl {
     }
 
     //@Dev send ETH
-    event WithdrawETH(address indexed receiver, uint amount);
+    event WithdrawETH(address indexed receiver, uint indexed amount);
     //@Param _to - receiver of ETH
     // _valueInWei - how much to send)
     function sendETH(address _to, uint _valueInWei) external returns(bool) {
@@ -83,7 +83,7 @@ contract Wallet is Ownable, AccessControl {
     // @Dev safeTransfer used for security issue.
     // @Param IERC20 _token - token that this wallet's user want to send.
     // _to - receiver's address   _amount - how much to send
-    event WithdrawERC20(address indexed receiver, uint amount);
+    event WithdrawERC20(address indexed receiver, uint indexed amount);
 
     function sendToken(IERC20 _token, address _to, uint _amount) external {
         require(hasRole(USER_ROLE, msg.sender), "Caller is not our user");
@@ -99,13 +99,13 @@ contract Wallet is Ownable, AccessControl {
     // _spender - smart contract that will manipulate this contract's token
     // _amount - how much to allow
 
-    event Allowance(address indexed spender, uint value);
+    event AllowanceInit(address indexed spender, uint indexed value);
     function approve(IERC20 _token, address _spender, uint _amount) external {
         require(hasRole(USER_ROLE, msg.sender), "Caller is not our user");
         require(_token.balanceOf(address(this)) >= _amount, "Not enough tokens");
 
         _token.safeApprove(_spender, _amount);
-        emit Allowance(_spender, _amount);
+        emit AllowanceInit(_spender, _amount);
     }
 
     // @Dev Please use this function for increasing the allowance value
@@ -115,11 +115,13 @@ contract Wallet is Ownable, AccessControl {
     // _spender - smart contract that will manipulate this contract's token
     // _amount - how much to allow
 
-    function allowanceIncrease(IERC20 _token, address _spender, uint _amount) external {
+
+    event AllowanceIncBy(address indexed spender, uint indexed value);
+    function allowanceIncreaseBy(IERC20 _token, address _spender, uint _amount) external {
         require(hasRole(USER_ROLE, msg.sender), "Caller is not our user");
         require(_token.balanceOf(address(this)) >= _amount, "Not enough tokens");
         _token.safeIncreaseAllowance(_spender, _amount);
-        emit Allowance(_spender, _amount);
+        emit AllowanceIncBy(_spender, _amount);
     }
 
     // @Dev Please use this function for increasing the allowance value
@@ -129,11 +131,12 @@ contract Wallet is Ownable, AccessControl {
     // _spender - smart contract that will manipulate this contract's token
     // _amount - how much to allow    
 
-    function allowanceDecrease(IERC20 _token, address _spender, uint _amount) external {
+    event AllowanceDecBy(address indexed spender, uint indexed value);
+    function allowanceDecreaseBy(IERC20 _token, address _spender, uint _amount) external {
         require(hasRole(USER_ROLE, msg.sender), "Caller is not our user");
         require(_token.balanceOf(address(this)) >= _amount, "Not enough tokens");
         _token.safeDecreaseAllowance(_spender, _amount);
-        emit Allowance(_spender, _amount);
+        emit AllowanceDecBy(_spender, _amount);
     }
 
     function balance() view external returns(uint){

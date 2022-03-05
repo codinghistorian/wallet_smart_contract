@@ -48,6 +48,9 @@ Initialize..
 2)wallet contract needs to approve so that manipulator can safeTransferfrom the tokens
 3)do the safeTransferFrom from wallet address to 4th address in ganache. - check it with balanceOf();
 
+->220305 20:50 KST well, the allowance was checked through event in the firstplace.
+I can also try to check the allowance by calling ERC20 allowance 
+
 220303 21:31 KST
 once all those things above work fine, write scripts with ganache accounts.
 get that testing I did for chess game to run test on hardhat node.
