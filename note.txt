@@ -1,3 +1,5 @@
+220305 17:28 KST I just made a damn receiver contract that receives ETH and tokens
+
 220303 21:19 KST note for testing
 
 0)deploy token1, token2 and wallet
@@ -28,15 +30,23 @@ add ganache accounts to metamask
 1)change fee with wallet 0.
 2)check if the fee changed by reading the public state variable.
 
-##servier provider needs to be the deployer of the contract##
-1)check if the provider's addresses is the first account in ganache
+220305 17:46 KST
+changeFee works fine
+Owner works fine.
+Bandit(commission taker) check fine.
 
+##servier provider needs to be the deployer of the contract##
+1)check if the provider's addresses is the first account in ganache 
+
+
+220305 17:49 KST I will just make the receiver contract as spender.
+
+Initialize..
 ##checking allowance##
 
 1)need to deploy a contract that will manipulate ERC20 from the wallet contract.
 2)wallet contract needs to approve so that manipulator can safeTransferfrom the tokens
 3)do the safeTransferFrom from wallet address to 4th address in ganache. - check it with balanceOf();
-
 
 220303 21:31 KST
 once all those things above work fine, write scripts with ganache accounts.

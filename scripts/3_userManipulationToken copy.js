@@ -20,6 +20,10 @@ let addresses = JSON.parse(rawdata);
   const wallet = {
     address : addresses.wallet
   };
+  const receiver = {
+    address : addresses.receiver
+  };
+  
 
 
   const url = "http://localhost:7545";
@@ -53,13 +57,13 @@ async function main() {
 
   // function sendToken(IERC20 _token, address _to, uint _amount) external {
 
-  const thirdGuyGanache = "0xBAF6E8C611e54152b7b907f5e0E9815e771f565c";
+  // const thirdGuyGanache = "0xBAF6E8C611e54152b7b907f5e0E9815e771f565c";
 
-  let transferResultTokenA = await userOnWallet.sendToken(tokenA.address, thirdGuyGanache, 11);
+  let transferResultTokenA = await userOnWallet.sendToken(tokenA.address, receiver.address, 11);
   
   console.log(transferResultTokenA);
 
-  let transferResultTokenB = await userOnWallet.sendToken(tokenB.address, thirdGuyGanache, 11);
+  let transferResultTokenB = await userOnWallet.sendToken(tokenB.address, receiver.address, 11);
   
   console.log(transferResultTokenB);
 
@@ -72,13 +76,13 @@ async function main() {
 
   console.log("Balance of B in Wallet after transfer: " + ERCB_balanceInWalletAT);
 
-  var ERCA_balanceInThirdGuy = await erc20a.balanceOf(thirdGuyGanache);
+  var ERCA_balanceInThirdGuy = await erc20a.balanceOf(receiver.address);
 
-  console.log("Balance of A in 3rd ganache account: " + ERCA_balanceInThirdGuy);
+  console.log("Balance of A in receiver Contract is : " + ERCA_balanceInThirdGuy);
   
-  var ERCB_balanceInThirdGuy = await erc20b.balanceOf(thirdGuyGanache);
+  var ERCB_balanceInThirdGuy = await erc20b.balanceOf(receiver.address);
 
-  console.log("Balance of B in 3rd ganache account: " + ERCB_balanceInThirdGuy);
+  console.log("Balance of A in receiver Contract is " + ERCB_balanceInThirdGuy);
 
 }
 

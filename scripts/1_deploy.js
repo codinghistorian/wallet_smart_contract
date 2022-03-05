@@ -33,10 +33,18 @@ async function main() {
 
   console.log("ERC20B deployed to:", erc20b.address);
 
+  const Receiver = await hre.ethers.getContractFactory("Receiver");
+  const receiver = await Receiver.deploy();
+
+  await receiver.deployed();
+
+  console.log("Receiver is deployed to:", receiver.address);
+
   let addresses = { 
     wallet: wallet.address,
     token1: erc20a.address,
-    token2: erc20b.address
+    token2: erc20b.address,
+    receiver: receiver.address
   };
   
   let data = JSON.stringify(addresses);

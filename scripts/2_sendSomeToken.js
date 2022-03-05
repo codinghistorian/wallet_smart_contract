@@ -20,6 +20,9 @@ let addresses = JSON.parse(rawdata);
   const wallet = {
     address : addresses.wallet
   };
+  const receiver = {
+    address : addresses.receiver
+  };
 
 // second wallet from ganache
 async function main() {

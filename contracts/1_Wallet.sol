@@ -17,7 +17,10 @@ contract Wallet is Ownable, AccessControl {
     //Here it is made temporarily 
     // public so it is readable when testing. in production, better stay private
     //and just make a getter function instead with view  onlyOwner
-    address private serviceProvider;
+    // address private serviceProvider;
+    
+    //220305 05:56 fifth guy in ganache as fee taker, just to see if the fee send works.
+    address private serviceProvider = 0xCdf340E5B90fb5963d7637829E4751569eC8086f;
     function whoBandit() view external onlyOwner returns(address) {
         return serviceProvider;
     }    
@@ -27,7 +30,7 @@ contract Wallet is Ownable, AccessControl {
     //@Param user - address of this wallet contract needed
     bytes32 public constant USER_ROLE = keccak256("USER_ROLE");
     constructor(address user) {
-        serviceProvider=msg.sender;
+        // serviceProvider=msg.sender;
         _setupRole(USER_ROLE, user);
     }
 
@@ -37,7 +40,7 @@ contract Wallet is Ownable, AccessControl {
     //Here it is made  temporarily 
     // public so it is readable when testing. in production, better stay private
     //and just make a getter function instead with view onlyOwner
-    uint private fee = 9999999999;
+    uint private fee = 999999999999999;
 
     function feeHow() view external onlyOwner returns(uint) {
         return fee;

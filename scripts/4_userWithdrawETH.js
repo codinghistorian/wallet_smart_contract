@@ -6,7 +6,6 @@
 const hre = require("hardhat");
 const fs = require('fs');
 const path = require('path');
-const { logger } = require("ethers");
 require("dotenv").config();
 
 let rawdata = fs.readFileSync('addresses.json');
@@ -20,6 +19,9 @@ let addresses = JSON.parse(rawdata);
   };
   const wallet = {
     address : addresses.wallet
+  };
+  const receiver = {
+    address : addresses.receiver
   };
 
 // second wallet from ganache
@@ -73,25 +75,29 @@ let walletAsUser = new ethers.Contract(wallet.address,walletArtifact.abi,USER);
 
 console.log("pass4");
 
-const fourthGuy = "0x6979a7dc95efdB27d39aa74FDd529e4c4e03A04f";
+// const fourthGuy = "0x6979a7dc95efdB27d39aa74FDd529e4c4e03A04f";
 var valueInWei = hre.ethers.utils.parseEther("1.0");
-let result = await walletAsUser.sendETH(fourthGuy, valueInWei);
+let result = await walletAsUser.sendETH(receiver.address, valueInWei);
 
 await result.wait();
 
 console.log(result);
 
 
-const balanceUSERETH = await provider.getBalance(USER.address);
+// const balanceUSERETH = await provider.getBalance(USER.address);
 
 const balance3rdETH = await provider.getBalance(thirdGuy.address);
-const balance4thETH = await provider.getBalance(fourthGuy);
+const balanceReceiver = await provider.getBalance(receiver.address);
 
-console.log("ETH balance of USER  " + balanceUSERETH);
+// console.log("ETH balance of USER  " + balanceUSERETH);
 
 console.log("ETH balance of 3rd guy  " + balance3rdETH);
 
-console.log("ETH balance of 4th guy  " + balance4thETH);
+console.log("ETH balance of receiver contract  " + balanceReceiver);
+
+const balance5thETH = await provider.getBalance("0xCdf340E5B90fb5963d7637829E4751569eC8086f");
+
+console.log("ETH balance of 5th guy(commisison taker)  " + balance5thETH);
 
 //220305 04:09 KST. Okay the sendETH works and the fourth guy receives eth but
 //commission did not seem to be sent.
@@ -99,6 +105,8 @@ console.log("ETH balance of 4th guy  " + balance4thETH);
 //220305 04:25 KST ah.. shit I need to check for sure if USER got the ETH
 // but the fee is so small and USER spend gas fee so hard to find out by just checking the
 // balances. I'll do it tomorrow
+
+//220305 05:59 yep, the comission system worksx
 
 
 }

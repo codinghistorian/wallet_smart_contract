@@ -30,25 +30,39 @@ const url = "http://localhost:7545";
 
 let provider = new hre.ethers.providers.JsonRpcProvider(url);
 
-var privateKey0 = process.env.PRIVATE_KEY0;
+var privateKey1 = process.env.PRIVATE_KEY1;
 
-const OWNER = new hre.ethers.Wallet(privateKey0,provider);
+const USER = new hre.ethers.Wallet(privateKey1,provider);
 
 
   const walletArtifact = require('../artifacts/contracts/1_Wallet.sol/Wallet.json');
 
-  let walletAsOWNER = new ethers.Contract(wallet.address,walletArtifact.abi,OWNER);
-  // function feeHow() view external onlyOwner returns(uint)
+  
+  let walletAsUSER = new ethers.Contract(wallet.address,walletArtifact.abi,USER);
 
-  // function changeFee(uint _new) external onlyOwner {
-  var changeFee = await walletAsOWNER.changeFee(3);
-  await changeFee.wait();
+   // 220305 20:08 KST  imma check allowance with event.
+  // function approve(IERC20 _token, address _spender, uint _amount) external {
+ 
+  var approveInit = await walletAsUSER.approve(tokenA.address, receiver.address, 11);
+  await approveInit.wait();
+  console.log(approveInit);
+ 
+  //220305 20:14 how to do waffle test for event..?
 
-  var howMuchFee = await walletAsOWNER.feeHow();
-  console.log(howMuchFee)
+  // function allowanceIncrease(IERC20 _token, address _spender, uint _amount) external {
 
-  var deployerIsWho = await walletAsOWNER.owner();
-  console.log(deployerIsWho);
+  // var approveIncre = await walletAsUSER.allowanceIncrease(tokenA.address, receiver.address, 22);
+
+  // await approveIncre.owner();
+  // console.log(approveIncre);
+
+  // function allowanceDecrease(IERC20 _token, address _spender, uint _amount) external {
+
+  // var approveDecre = await walletAsUSER.allowanceDecrease(tokenA.address, receiver.address, 9);
+
+  // await approveDecre.owner();
+  // console.log(approveDecre);
+
 
 }
 
