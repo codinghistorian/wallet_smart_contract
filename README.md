@@ -1,3 +1,6 @@
+220305 21:15 Waffle Testing to be started. 
+ 
+ 
  Write a smart contract like "wallet".
  A smart contract must have the necessary and sufficient functionality so that the contract can be used as a regular address on the Ethereum network:
  * Ability to send/receive ETH

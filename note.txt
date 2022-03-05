@@ -1,3 +1,8 @@
+220305 21:10 as of now, I need to write test scripts so that it will run on hardhat node.
+or just waffle Test
+
+
+
 220305 17:28 KST I just made a damn receiver contract that receives ETH and tokens
 
 220303 21:19 KST note for testing
