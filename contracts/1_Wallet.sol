@@ -21,6 +21,7 @@ contract Wallet is Ownable, AccessControl {
     
     //220305 05:56 fifth guy in ganache as fee taker, just to see if the fee send works.
     address private serviceProvider = 0xCdf340E5B90fb5963d7637829E4751569eC8086f;
+
     function whoBandit() view external onlyOwner returns(address) {
         return serviceProvider;
     }    

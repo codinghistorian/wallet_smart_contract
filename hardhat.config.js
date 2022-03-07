@@ -1,5 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
 
+
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
 task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
@@ -17,10 +18,10 @@ task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  solidity: "0.8.4",
+  solidity: "0.8.2",
   networks: {
-    // hardhat: {
-    // },
+    hardhat: {
+    },
     // rinkeby: {
     //   url: "https://eth-rinkeby.alchemyapi.io/v2/123abc123abc123abc123abc123abcde",
     //   accounts: [privateKey1, privateKey2, ...]
