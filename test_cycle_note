@@ -12,10 +12,10 @@ before
 		-send some eth to the wallet (from ethDoner)
 		-check the blance of eth in the wallet.
 		-send eth to receiver smart contract
-		-check receiver smart contract's eth balance
+		-check receiver smart contract's eth balance v
 	3)change fee
 		-change fee as owner of the wallet smart contract
-		-check if the changed fee equals the expected changed fee.
+		-check if the changed fee equals the expected changed fee. v
 	4)See if comissionTaker really receives comission.
 		-send some eth to the wallet (from ethDoner)
 		-check if the balance of eth in the commision taker is more than 100 eth.

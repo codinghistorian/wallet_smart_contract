@@ -86,16 +86,75 @@ describe("Whole Test Cycle", function () {
 });
 
 });
-      it("The contract can receiver either", async () => {
-      var tx = {
-        to: receiver.address,
-        value: ethers.utils.parseEther("1.0")
-      }
-      let ethTx= await ethDoner.sendTransaction(tx)
-      await ethTx.wait();
+    describe("ETH transfer tests", () => {
+      var tx1;
+      before (async ()=>{
+        tx1 = {
+          to: wallet.address,
+          value: ethers.utils.parseEther("1.0")
+        }
+        let ethTx= await ethDoner.sendTransaction(tx1);
+        await ethTx.wait();
+      });
+      it("Wallet contract can receiver either", async () => {
+        const balanceWallet = await ethers.provider.getBalance(wallet.address);
+        expect(balanceWallet).to.equal(tx1.value);
+      });
+      it("Wallet contract can send either", async () => {
+        let walletAsUser = new ethers.Contract(wallet.address,walletArtifact.abi,walletUser);
+        // function sendETH(address _to, uint _valueInWei) external returns(bool) {
+        var tx2 = await walletAsUser.sendETH(receiver.address, ethers.utils.parseEther("0.5"));
+        await tx2.wait();
+        const balanceReceiver = await ethers.provider.getBalance(receiver.address);
+        expect(balanceReceiver).to.be.below(ethers.utils.parseEther("0.5"));
+        expect(balanceReceiver).to.be.above(ethers.utils.parseEther("0.45"));
+      });
+      it("ComissionTaker received ether", async () => {
+        let walletAsUser = new ethers.Contract(wallet.address,walletArtifact.abi,walletUser);
+        // function sendETH(address _to, uint _valueInWei) external returns(bool) {
+        var tx2 = await walletAsUser.sendETH(receiver.address, ethers.utils.parseEther("0.5"));
+        await tx2.wait();
+        const balanceCommissionTaker = await ethers.provider.getBalance(comissionTaker.address);
+        expect(balanceCommissionTaker).to.be.above(ethers.utils.parseEther("100"));
+      });
+    });
+    describe("Wallet contract Owner can change fee", () => {
+      // function feeHow() view external onlyOwner returns(uint) {
+      // function changeFee(uint _new) external onlyOwner {
+      var tx1;
+      before (async ()=>{
+        tx1 = {
+          to: wallet.address,
+          value: ethers.utils.parseEther("1.0")
+        }
+        let ethTx= await ethDoner.sendTransaction(tx1);
+        await ethTx.wait();
+      });
+      it("changed fee is correct", async() => {
+        let walletAsOwner = new ethers.Contract(wallet.address,walletArtifact.abi,owner);
+        const tx3 = await walletAsOwner.changeFee(11);
+        await tx3.wait();
 
-      const balanceReceiver = await ethers.provider.getBalance(receiver.address);
-      expect(balanceReceiver).to.equal(tx.value);
+        const fee = await walletAsOwner.feeHow();
+        expect(fee).to.equal(11);
+      });
+      it("ComissionTaker received ether", async () => {
+        let walletAsOwner = new ethers.Contract(wallet.address,walletArtifact.abi,owner);
+        const tx3 = await walletAsOwner.changeFee(11);
+        await tx3.wait();
+
+        const fee = await walletAsOwner.feeHow();
+        expect(fee).to.equal(11);
+        
+        let walletAsUser = new ethers.Contract(wallet.address,walletArtifact.abi,walletUser);
+        // function sendETH(address _to, uint _valueInWei) external returns(bool) {
+        var tx2 = await walletAsUser.sendETH(receiver.address, ethers.utils.parseEther("0.5"));
+        await tx2.wait();
+
+        const balanceCommissionTaker = await ethers.provider.getBalance(comissionTaker.address);
+        expect(balanceCommissionTaker).to.be.above(ethers.utils.parseEther("100"));
+      });
 
     });
+
 });
