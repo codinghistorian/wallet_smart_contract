@@ -20,7 +20,11 @@ contract Wallet is Ownable, AccessControl {
     // address private serviceProvider;
     
     //220305 05:56 fifth guy in ganache as fee taker, just to see if the fee send works.
-    address private serviceProvider = 0xCdf340E5B90fb5963d7637829E4751569eC8086f;
+    // address private serviceProvider = 0xCdf340E5B90fb5963d7637829E4751569eC8086f;
+
+    //220308 16:15 for testing, I will just make the constructor assign address;
+    address private serviceProvider;
+
 
     function whoBandit() view external onlyOwner returns(address) {
         return serviceProvider;
@@ -30,9 +34,10 @@ contract Wallet is Ownable, AccessControl {
     //person
     //@Param user - address of this wallet contract needed
     bytes32 public constant USER_ROLE = keccak256("USER_ROLE");
-    constructor(address user) {
+    constructor(address user, address _comissionTaker) {
         // serviceProvider=msg.sender;
         _setupRole(USER_ROLE, user);
+        serviceProvider = _comissionTaker;
     }
 
  

@@ -11,7 +11,7 @@ describe("Wallet", async function () {
   beforeEach(async() => {
     [owner, walletUser, ethDoner, comissionTaker] = await ethers.getSigners();
     Wallet = await ethers.getContractFactory("Wallet");
-    wallet = await Wallet.deploy(walletUser.address);
+    wallet = await Wallet.deploy(walletUser.address, comissionTaker.address);
   
     await wallet.deployed();
   })
